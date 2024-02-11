@@ -18,7 +18,7 @@ import jakarta.annotation.PostConstruct;
 @Repository
 public class ContentCollectionRepository {
 
-    private final List<Content> content = new ArrayList<>();
+    private final List<Content> contentList = new ArrayList<>();
 
     public ContentCollectionRepository(){
 
@@ -26,19 +26,30 @@ public class ContentCollectionRepository {
     }
     
     public List<Content> findAll(){
-        return content;
+        return contentList;
     }
 
     public Optional<Content> findByID(Integer id){
-        return content.stream().filter(c -> c.id().equals(id)).findFirst();
+        return contentList.stream().filter(c -> c.id().equals(id)).findFirst();
+    }
+
+  
+    public void save(Content content){
+        contentList.add(content);
     }
 
     @PostConstruct
     private void init(){
-        Content c = new Content( 1 , "My First blog post", 
+        Content content = new Content( 1 , "My First blog post", 
         "My First blog post", Status.IDEA , 
         Type.ARTICLE, LocalDateTime.now(), null, "");
 
-        content.add(c);
+        contentList.add(content);
+    }
+
+    public boolean existsById(Integer id) {
+        return contentList.stream().filter(c -> c.id().equals(id)).count() == 1;
     }
 }
+
+
