@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +36,7 @@ public class ContentController {
 
     
     // make a request and find all the pieces of content in the system
-    @GetMapping()
+    @GetMapping("")
     public List<Content> findAll(){
         return repository.findAll();
     }
@@ -52,6 +53,7 @@ public class ContentController {
         repository.save(content);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public void update(@RequestBody Content content, @PathVariable Integer id){
         if(!repository.existsById(id)){
@@ -60,5 +62,10 @@ public class ContentController {
         repository.save(content);
     }
     
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id){
+        repository.delete(id);
+    }
 }
 
