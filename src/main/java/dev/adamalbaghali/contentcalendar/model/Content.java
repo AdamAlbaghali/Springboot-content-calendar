@@ -2,8 +2,13 @@ package dev.adamalbaghali.contentcalendar.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotBlank;
+
+
+
 public record Content(
         Integer id,
+        @NotBlank
         String title,
         String desc,
         Status status,
