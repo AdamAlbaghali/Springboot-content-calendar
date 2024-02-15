@@ -1,7 +1,16 @@
 package dev.adamalbaghali.contentcalendar;
 
+import java.time.LocalDateTime;
+
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import dev.adamalbaghali.contentcalendar.model.Content;
+import dev.adamalbaghali.contentcalendar.model.Status;
+import dev.adamalbaghali.contentcalendar.model.Type;
+import dev.adamalbaghali.contentcalendar.repository.ContentRepository;
 
 
 @SpringBootApplication
@@ -12,4 +21,16 @@ public class Application {
 
 	}
 
+	@Bean
+	CommandLineRunner commandLineRunner(ContentRepository repository) {
+		return args -> {
+			//insert some data into the database
+			 Content content = new Content( null , "Hello Github", 
+        		"All about Github", Status.IDEA , 
+        		Type.VIDEO, LocalDateTime.now(), null, "");
+			
+			repository.save(content);
+
+		};
+	}
 }

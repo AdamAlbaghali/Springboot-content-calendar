@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import dev.adamalbaghali.contentcalendar.repository.ContentCollectionRepository;
+import dev.adamalbaghali.contentcalendar.repository.ContentRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import dev.adamalbaghali.contentcalendar.model.Content;
@@ -31,9 +32,9 @@ import dev.adamalbaghali.contentcalendar.model.Type;
 @CrossOrigin
 public class ContentController {
 
-    private final ContentCollectionRepository repository;
+    private final ContentRepository repository;
 
-    public ContentController(ContentCollectionRepository repository) {
+    public ContentController(ContentRepository repository) {
         this.repository = repository;
     }
 
@@ -46,7 +47,7 @@ public class ContentController {
 
     @GetMapping("/{id}")
     public Content findById(@PathVariable Integer id){
-        return repository.findByID(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Content Not Found"));
+        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Content Not Found"));
     }
 
     //posting a request to api/content
@@ -68,7 +69,17 @@ public class ContentController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id){
-        repository.delete(id);
+        repository.deleteById(id);
+    }
+
+    @GetMapping("/filter/{keyword}")
+    public List<Content> findByTitle(@PathVariable String keyword){
+        return repository.findAllByTitleContains(keyword); 
+    }
+
+    @GetMapping("/filter/status/{status}")
+    public List<Content> findByStatus(@PathVariable Status status){
+        return repository.listByStatus(status);
     }
 }
 
