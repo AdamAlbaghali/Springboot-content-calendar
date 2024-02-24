@@ -23,7 +23,7 @@ The Spring Boot Content Calendar is a project developed using Java, Spring Boot,
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/springboot-content-calendar.git
+    git clone https://github.com/AdamAlbaghali/Springboot-content-calendar.git
     ```
 
 2. Navigate to the project directory:
